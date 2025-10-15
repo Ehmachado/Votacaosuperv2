@@ -370,21 +370,21 @@ const SuperBarreiras = () => {
 
     if (type === 'select') {
       return (
-        <div className="space-y-2">
-          <Label className="text-xl font-medium text-gray-800">{label}</Label>
+        <div className="space-y-1">
+          <Label className="text-sm font-semibold text-white">{label}</Label>
           {previewMode ? (
-            <div className="text-2xl font-semibold text-gray-900 bg-white px-4 py-3 rounded-lg border-2 border-gray-200">
+            <div className="text-base font-semibold text-gray-900 bg-white px-3 py-2 rounded border border-gray-300">
               {formData[field] === 'sim' ? 'Sim' : formData[field] === 'nao' ? 'Não' : 'Não se aplica'}
             </div>
           ) : (
             <Select value={formData[field]} onValueChange={(value) => handleChange(field, value)}>
-              <SelectTrigger className="text-2xl font-semibold py-6 h-auto">
+              <SelectTrigger className="text-base font-semibold py-2 h-auto bg-white">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="sim" className="text-xl">Sim</SelectItem>
-                <SelectItem value="nao" className="text-xl">Não</SelectItem>
-                <SelectItem value="naoSeAplica" className="text-xl">Não se aplica</SelectItem>
+                <SelectItem value="sim" className="text-base">Sim</SelectItem>
+                <SelectItem value="nao" className="text-base">Não</SelectItem>
+                <SelectItem value="naoSeAplica" className="text-base">Não se aplica</SelectItem>
               </SelectContent>
             </Select>
           )}
@@ -394,10 +394,10 @@ const SuperBarreiras = () => {
 
     if (type === 'date') {
       return (
-        <div className="space-y-2">
-          <Label className="text-xl font-medium text-gray-800">{label}</Label>
+        <div className="space-y-1">
+          <Label className="text-sm font-semibold text-white">{label}</Label>
           {previewMode ? (
-            <div className="text-2xl font-semibold text-gray-900 bg-white px-4 py-3 rounded-lg border-2 border-gray-200">
+            <div className="text-base font-semibold text-gray-900 bg-white px-3 py-2 rounded border border-gray-300">
               {formData[field] || '-'}
             </div>
           ) : (
@@ -405,7 +405,7 @@ const SuperBarreiras = () => {
               type="date"
               value={formData[field]}
               onChange={(e) => handleChange(field, e.target.value)}
-              className="text-2xl font-semibold py-6 h-auto"
+              className="text-base font-semibold py-2 h-auto bg-white"
             />
           )}
         </div>
@@ -413,17 +413,17 @@ const SuperBarreiras = () => {
     }
 
     return (
-      <div className="space-y-2">
-        <Label className="text-xl font-medium text-gray-800">{label}</Label>
+      <div className="space-y-1">
+        <Label className="text-sm font-semibold text-white">{label}</Label>
         {previewMode ? (
-          <div className="text-2xl font-semibold text-gray-900 bg-white px-4 py-3 rounded-lg border-2 border-gray-200">
+          <div className="text-base font-semibold text-gray-900 bg-white px-3 py-2 rounded border border-gray-300">
             {formData[field] || '-'}
           </div>
         ) : (
           <Input
             value={formData[field]}
             onChange={(e) => handleChange(field, e.target.value)}
-            className="text-2xl font-semibold py-6 h-auto"
+            className="text-base font-semibold py-2 h-auto bg-white"
           />
         )}
       </div>
