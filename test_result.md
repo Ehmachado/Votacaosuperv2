@@ -270,7 +270,13 @@ metadata:
 
 test_plan:
   current_focus:
-    - "All backend API endpoints tested and verified"
+    - "Form Filling and Validation"
+    - "Share BB Automatic Calculation"
+    - "Save Operation Functionality"
+    - "List Operations Functionality"
+    - "Load Saved Operation"
+    - "Preview Mode Functionality"
+    - "New Operation (Clear Form)"
   stuck_tasks: []
   test_all: true
   test_priority: "high_first"
