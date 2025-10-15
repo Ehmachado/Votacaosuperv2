@@ -478,18 +478,18 @@ const SuperBarreiras = () => {
       )}
 
       {/* Main Content */}
-      <div id="export-container" className="max-w-[1600px] mx-auto p-6">
+      <div id="export-container" className="mx-auto p-4" style={{ maxWidth: '1400px', aspectRatio: '3 / 3.5' }}>
         {/* Campos do topo */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-6 grid grid-cols-2 gap-6">
+        <div className="bg-white rounded-lg shadow-md p-3 mb-3 grid grid-cols-2 gap-3">
           {renderField('Prefixo', 'prefixo')}
           {renderField('Agência', 'agencia')}
         </div>
 
         {/* Grid 2x2 dos 4 cards */}
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-2 gap-3">
           {/* Card 1 - Dados Básicos (Amarelo BB) */}
-          <div className="rounded-xl shadow-xl p-6 space-y-4" style={{ backgroundColor: '#FFFBEA' }}>
-            <h2 className="text-3xl font-bold text-[#003399] mb-6 pb-3 border-b-4 border-[#FFCC00]">Dados Básicos</h2>
+          <div className="rounded-lg shadow-lg p-4 space-y-3" style={{ backgroundColor: '#B8860B' }}>
+            <h2 className="text-xl font-bold text-white mb-3 pb-2 border-b-2 border-[#FFCC00]">Dados Básicos</h2>
             {renderField('Alçada', 'alcada')}
             {renderField('MCI', 'mci')}
             {renderField('Cliente', 'cliente')}
@@ -502,8 +502,8 @@ const SuperBarreiras = () => {
           </div>
 
           {/* Card 2 - Operação (Azul BB) */}
-          <div className="rounded-xl shadow-xl p-6 space-y-4" style={{ backgroundColor: '#E6ECFF' }}>
-            <h2 className="text-3xl font-bold text-[#003399] mb-6 pb-3 border-b-4 border-[#FFCC00]">Operação e Seguros</h2>
+          <div className="rounded-lg shadow-lg p-4 space-y-3" style={{ backgroundColor: '#003399' }}>
+            <h2 className="text-xl font-bold text-white mb-3 pb-2 border-b-2 border-[#FFCC00]">Operação e Seguros</h2>
             {renderField('Autorização Grão', 'autorizacaoGrao', 'textarea')}
             {renderField('Valor Operação', 'valorOperacao', 'money')}
             {renderField('Seguros (Quais?)', 'seguros')}
@@ -512,9 +512,9 @@ const SuperBarreiras = () => {
             {renderField('Condicionante do LC (Qual?)', 'condicionanteLC')}
           </div>
 
-          {/* Card 3 - Receitas (Cinza claro) */}
-          <div className="rounded-xl shadow-xl p-6 space-y-4" style={{ backgroundColor: '#F5F5F5' }}>
-            <h2 className="text-3xl font-bold text-[#003399] mb-6 pb-3 border-b-4 border-[#FFCC00]">Receitas e Garantias</h2>
+          {/* Card 3 - Receitas (Cinza escuro) */}
+          <div className="rounded-lg shadow-lg p-4 space-y-3" style={{ backgroundColor: '#4A5568' }}>
+            <h2 className="text-xl font-bold text-white mb-3 pb-2 border-b-2 border-[#FFCC00]">Receitas e Garantias</h2>
             {renderField('Receita bruta - Clientes 03-20-41 Selecionar LC, F12-6-F9', 'receitaBrutaClientes', 'money')}
             {renderField('Receita Bruta Total Obtida', 'receitaBrutaObtida', 'money')}
             {renderField('Receita Bruta Total Prevista', 'receitaBrutaPrevista', 'money')}
@@ -525,17 +525,17 @@ const SuperBarreiras = () => {
             {renderField('Garantias', 'garantias')}
           </div>
 
-          {/* Card 4 - Financeiro (Branco com degradê) */}
-          <div className="rounded-xl shadow-xl p-6 space-y-4 bg-gradient-to-br from-white to-gray-50">
-            <h2 className="text-3xl font-bold text-[#003399] mb-6 pb-3 border-b-4 border-[#FFCC00]">Dados Financeiros</h2>
+          {/* Card 4 - Financeiro (Verde escuro) */}
+          <div className="rounded-lg shadow-lg p-4 space-y-3" style={{ backgroundColor: '#2F855A' }}>
+            <h2 className="text-xl font-bold text-white mb-3 pb-2 border-b-2 border-[#FFCC00]">Dados Financeiros</h2>
             
             {/* Share BB - Campo calculado */}
-            <div className="space-y-2 bg-yellow-50 p-4 rounded-lg border-2 border-[#FFCC00]">
-              <Label className="text-xl font-medium text-gray-800">Share BB (calculado automaticamente)</Label>
-              <div className="text-3xl font-bold text-[#003399]">
+            <div className="space-y-1 bg-yellow-100 p-3 rounded-lg border-2 border-[#FFCC00]">
+              <Label className="text-sm font-medium text-gray-800">Share BB (calculado automaticamente)</Label>
+              <div className="text-2xl font-bold text-[#003399]">
                 {shareBB}%
               </div>
-              <p className="text-sm text-gray-600 italic">Endividamento BB ÷ Endividamento SFN</p>
+              <p className="text-xs text-gray-600 italic">Endividamento BB ÷ Endividamento SFN</p>
             </div>
             
             {renderField('Recursos líquidos', 'recursosLiquidos', 'money')}
