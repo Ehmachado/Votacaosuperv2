@@ -527,7 +527,7 @@ const SuperBarreiras = () => {
           {/* Card 1 - Dados Básicos (Amarelo BB) */}
           <div className="rounded-lg shadow-lg p-3 space-y-2" style={{ backgroundColor: '#B8860B' }}>
             <h2 className="text-xl font-bold text-white mb-2 pb-1 border-b-2 border-[#FFCC00]">Dados Básicos</h2>
-            {renderField('Alçada', 'alcada')}
+            {renderField('Valor da Operação', 'valorOperacao', 'money')}
             {renderField('MCI', 'mci')}
             {renderField('Cliente', 'cliente')}
             {renderField('Idade do Cliente', 'idadeCliente')}
@@ -575,7 +575,6 @@ const SuperBarreiras = () => {
             {renderField('Condicionante do LC (Qual?)', 'condicionanteLC', 'textarea')}
             {renderField('Seguros (Quais?)', 'seguros')}
             {renderField('RS contratado na operação', 'rsContratado', 'money')}
-            {renderField('Valor da Operação', 'valorOperacao', 'money')}
           </div>
 
           {/* Card 3 - Receitas (Cinza escuro) */}
