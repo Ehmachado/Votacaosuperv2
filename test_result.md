@@ -284,3 +284,5 @@ test_plan:
 agent_communication:
   - agent: "testing"
     message: "Completed comprehensive backend testing for SUPER BARREIRAS system. All 6 API endpoints (health check, CRUD operations) are working correctly. Used real test data as specified in requirements. All tests passed including shareBB field validation, data persistence, and proper error handling."
+  - agent: "testing"
+    message: "Starting frontend testing for SUPER BARREIRAS system. Will test all specified scenarios: form filling, Share BB calculation, save/list/load operations, preview mode, and new operation functionality. Backend URL configured as https://rural-finance-2.preview.emergentagent.com/api"
