@@ -1,17 +1,16 @@
 from fastapi import APIRouter, HTTPException
-from motor.motor_asyncio import AsyncIOMotorClient
 from models.operacao import Operacao, OperacaoCreate
 from typing import List
-import os
 from datetime import datetime
 
 router = APIRouter()
 
-# MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
-operacoes_collection = db.operacoes
+# MongoDB collection - will be set by server.py
+operacoes_collection = None
+
+def set_db(database):
+    global operacoes_collection
+    operacoes_collection = database.operacoes
 
 @router.post("/operacoes", response_model=Operacao)
 async def create_operacao(operacao_data: OperacaoCreate):
