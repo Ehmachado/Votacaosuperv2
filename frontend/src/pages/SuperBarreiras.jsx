@@ -4,12 +4,16 @@ import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Textarea } from '../components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
-import { Save, Download, Eye } from 'lucide-react';
+import { Save, Download, Eye, List, Plus, Trash2, Edit } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { toast } from '../hooks/use-toast';
+import { operacoesService } from '../services/api';
 
 const SuperBarreiras = () => {
   const [previewMode, setPreviewMode] = useState(false);
+  const [showList, setShowList] = useState(false);
+  const [operacoes, setOperacoes] = useState([]);
+  const [currentOperacaoId, setCurrentOperacaoId] = useState(null);
   const [formData, setFormData] = useState({
     prefixo: '',
     agencia: '',
@@ -48,6 +52,25 @@ const SuperBarreiras = () => {
 
   const [shareBB, setShareBB] = useState('0,00');
 
+  // Carregar operações ao montar
+  useEffect(() => {
+    loadOperacoes();
+  }, []);
+
+  const loadOperacoes = async () => {
+    try {
+      const data = await operacoesService.getAll();
+      setOperacoes(data);
+    } catch (error) {
+      console.error('Erro ao carregar operações:', error);
+      toast({
+        title: "Erro",
+        description: "Erro ao carregar operações",
+        variant: "destructive"
+      });
+    }
+  };
+
   // Calcular Share BB automaticamente
   useEffect(() => {
     const sfn = parseFloat(formData.endividamentoSFN.replace(/\./g, '').replace(',', '.')) || 0;
@@ -79,12 +102,139 @@ const SuperBarreiras = () => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSave = async () => {
-    // Mock save - será implementado com backend
-    toast({
-      title: "Dados salvos",
-      description: "Operação salva com sucesso!"
+  const handleNew = () => {
+    setFormData({
+      prefixo: '',
+      agencia: '',
+      alcada: '',
+      mci: '',
+      cliente: '',
+      idadeCliente: '',
+      clienteDesde: '',
+      proposta: '',
+      linhaCredito: '',
+      itemFinanciado: '',
+      rating: '',
+      autorizacaoGrao: '',
+      valorOperacao: '',
+      seguros: '',
+      rsContratado: '',
+      limiteCredito: '',
+      condicionanteLC: '',
+      receitaBrutaClientes: '',
+      receitaBrutaObtida: '',
+      receitaBrutaPrevista: '',
+      resultadoObtido: '',
+      resultadoPrevisto: '',
+      pecuariaCompativel: 'naoSeAplica',
+      justifique: '',
+      garantias: '',
+      recursosLiquidos: '',
+      patrimonioTotal: '',
+      endividamentoSFN: '',
+      endividamentoBB: '',
+      inadAgroAgencia: '',
+      propostaCustomizada: 'naoSeAplica',
+      percentualGarantiaHipotecaria: '',
+      rendeFacil: 'naoSeAplica'
     });
+    setCurrentOperacaoId(null);
+    setShowList(false);
+  };
+
+  const handleLoad = async (operacao) => {
+    setFormData({
+      prefixo: operacao.prefixo || '',
+      agencia: operacao.agencia || '',
+      alcada: operacao.alcada || '',
+      mci: operacao.mci || '',
+      cliente: operacao.cliente || '',
+      idadeCliente: operacao.idadeCliente || '',
+      clienteDesde: operacao.clienteDesde || '',
+      proposta: operacao.proposta || '',
+      linhaCredito: operacao.linhaCredito || '',
+      itemFinanciado: operacao.itemFinanciado || '',
+      rating: operacao.rating || '',
+      autorizacaoGrao: operacao.autorizacaoGrao || '',
+      valorOperacao: operacao.valorOperacao || '',
+      seguros: operacao.seguros || '',
+      rsContratado: operacao.rsContratado || '',
+      limiteCredito: operacao.limiteCredito || '',
+      condicionanteLC: operacao.condicionanteLC || '',
+      receitaBrutaClientes: operacao.receitaBrutaClientes || '',
+      receitaBrutaObtida: operacao.receitaBrutaObtida || '',
+      receitaBrutaPrevista: operacao.receitaBrutaPrevista || '',
+      resultadoObtido: operacao.resultadoObtido || '',
+      resultadoPrevisto: operacao.resultadoPrevisto || '',
+      pecuariaCompativel: operacao.pecuariaCompativel || 'naoSeAplica',
+      justifique: operacao.justifique || '',
+      garantias: operacao.garantias || '',
+      recursosLiquidos: operacao.recursosLiquidos || '',
+      patrimonioTotal: operacao.patrimonioTotal || '',
+      endividamentoSFN: operacao.endividamentoSFN || '',
+      endividamentoBB: operacao.endividamentoBB || '',
+      inadAgroAgencia: operacao.inadAgroAgencia || '',
+      propostaCustomizada: operacao.propostaCustomizada || 'naoSeAplica',
+      percentualGarantiaHipotecaria: operacao.percentualGarantiaHipotecaria || '',
+      rendeFacil: operacao.rendeFacil || 'naoSeAplica'
+    });
+    setCurrentOperacaoId(operacao.id);
+    setShowList(false);
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm('Tem certeza que deseja deletar esta operação?')) {
+      try {
+        await operacoesService.delete(id);
+        toast({
+          title: "Sucesso",
+          description: "Operação deletada com sucesso!"
+        });
+        loadOperacoes();
+        if (currentOperacaoId === id) {
+          handleNew();
+        }
+      } catch (error) {
+        console.error('Erro ao deletar:', error);
+        toast({
+          title: "Erro",
+          description: "Erro ao deletar operação",
+          variant: "destructive"
+        });
+      }
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      const dataToSave = { ...formData, shareBB };
+      
+      if (currentOperacaoId) {
+        // Atualizar existente
+        await operacoesService.update(currentOperacaoId, dataToSave);
+        toast({
+          title: "Sucesso",
+          description: "Operação atualizada com sucesso!"
+        });
+      } else {
+        // Criar nova
+        const newOperacao = await operacoesService.create(dataToSave);
+        setCurrentOperacaoId(newOperacao.id);
+        toast({
+          title: "Sucesso",
+          description: "Operação salva com sucesso!"
+        });
+      }
+      
+      loadOperacoes();
+    } catch (error) {
+      console.error('Erro ao salvar:', error);
+      toast({
+        title: "Erro",
+        description: "Erro ao salvar operação",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleExportPNG = async () => {
@@ -109,12 +259,6 @@ const SuperBarreiras = () => {
       });
     }, 100);
   };
-
-  const moneyFields = [
-    'valorOperacao', 'rsContratado', 'receitaBrutaClientes', 'receitaBrutaObtida',
-    'receitaBrutaPrevista', 'resultadoObtido', 'resultadoPrevisto', 'recursosLiquidos',
-    'patrimonioTotal', 'endividamentoSFN', 'endividamentoBB', 'inadAgroAgencia'
-  ];
 
   const renderField = (label, field, type = 'text') => {
     if (type === 'money') {
@@ -237,12 +381,28 @@ const SuperBarreiras = () => {
           </div>
           <div className="flex gap-3">
             <Button
+              onClick={() => setShowList(!showList)}
+              variant="outline"
+              className="text-lg px-6 py-6 h-auto bg-white hover:bg-gray-100"
+            >
+              <List className="mr-2 h-5 w-5" />
+              {showList ? 'Ocultar' : 'Listar'}
+            </Button>
+            <Button
+              onClick={handleNew}
+              variant="outline"
+              className="text-lg px-6 py-6 h-auto bg-white hover:bg-gray-100"
+            >
+              <Plus className="mr-2 h-5 w-5" />
+              Nova
+            </Button>
+            <Button
               onClick={() => setPreviewMode(!previewMode)}
               variant="outline"
               className="text-lg px-6 py-6 h-auto bg-white hover:bg-gray-100"
             >
               <Eye className="mr-2 h-5 w-5" />
-              {previewMode ? 'Modo Edição' : 'Pré-visualizar'}
+              {previewMode ? 'Edição' : 'Preview'}
             </Button>
             <Button
               onClick={handleSave}
@@ -261,6 +421,50 @@ const SuperBarreiras = () => {
           </div>
         </div>
       </div>
+
+      {/* Lista de Operações */}
+      {showList && (
+        <div className="max-w-[1600px] mx-auto p-6">
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <h2 className="text-3xl font-bold text-[#003399] mb-6">Operações Salvas</h2>
+            <div className="space-y-3">
+              {operacoes.length === 0 ? (
+                <p className="text-xl text-gray-600 text-center py-8">Nenhuma operação salva</p>
+              ) : (
+                operacoes.map((op) => (
+                  <div key={op.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                    <div className="flex-1">
+                      <p className="text-xl font-bold text-gray-900">
+                        {op.proposta || 'Sem proposta'} - {op.cliente || 'Sem cliente'}
+                      </p>
+                      <p className="text-lg text-gray-600">
+                        Agência: {op.agencia || '-'} | Criado em: {new Date(op.createdAt).toLocaleDateString('pt-BR')}
+                      </p>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={() => handleLoad(op)}
+                        variant="outline"
+                        className="text-lg px-4 py-2"
+                      >
+                        <Edit className="mr-2 h-4 w-4" />
+                        Carregar
+                      </Button>
+                      <Button
+                        onClick={() => handleDelete(op.id)}
+                        variant="destructive"
+                        className="text-lg px-4 py-2"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Main Content */}
       <div id="export-container" className="max-w-[1600px] mx-auto p-6">
