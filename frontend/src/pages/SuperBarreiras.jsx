@@ -558,12 +558,12 @@ const SuperBarreiras = () => {
 
           {/* Card 4 - Financeiro (Verde escuro) */}
           <div className="rounded-lg shadow-lg p-3 space-y-2" style={{ backgroundColor: '#2F855A' }}>
-            <h2 className="text-lg font-bold text-white mb-2 pb-1 border-b-2 border-[#FFCC00]">Dados Financeiros</h2>
+            <h2 className="text-xl font-bold text-white mb-2 pb-1 border-b-2 border-[#FFCC00]">Dados Financeiros</h2>
             
             {/* Share BB - Campo calculado */}
             <div className="space-y-1 bg-yellow-100 p-2 rounded-lg border-2 border-[#FFCC00]">
-              <Label className="text-xs font-medium text-gray-800">Share BB (calculado automaticamente)</Label>
-              <div className="text-xl font-bold text-[#003399]">
+              <Label className="text-sm font-medium text-gray-800">Share BB (calculado automaticamente)</Label>
+              <div className="text-2xl font-bold text-[#003399]">
                 {shareBB}%
               </div>
               <p className="text-xs text-gray-600 italic">Endividamento BB ÷ Endividamento SFN</p>
