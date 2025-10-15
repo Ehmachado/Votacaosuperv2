@@ -369,53 +369,62 @@ const SuperBarreiras = () => {
     <div className="min-h-screen" style={{ backgroundColor: '#e8f7ff' }}>
       {/* Header */}
       <div className="bg-gradient-to-r from-[#003399] to-[#0055cc] shadow-lg">
-        <div className="max-w-[1600px] mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <img 
-              src="https://logodownload.org/wp-content/uploads/2014/05/banco-do-brasil-logo-1.png" 
-              alt="Banco do Brasil" 
-              className="h-16 bg-white rounded-lg px-3 py-2"
-            />
-            <h1 className="text-4xl font-bold text-white">SUPER BARREIRAS</h1>
-            <span className="text-2xl text-yellow-300 font-semibold">Análise de Operações</span>
+        <div className="mx-auto px-4 py-3">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-3">
+              <img 
+                src="https://logodownload.org/wp-content/uploads/2014/05/banco-do-brasil-logo-1.png" 
+                alt="Banco do Brasil" 
+                className="h-12 bg-white rounded px-2 py-1"
+              />
+              <div>
+                <h1 className="text-2xl font-bold text-white">SUPER BARREIRAS</h1>
+                <span className="text-sm text-yellow-300 font-semibold">Análise de Operações</span>
+              </div>
+            </div>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-2 flex-wrap">
             <Button
               onClick={() => setShowList(!showList)}
               variant="outline"
-              className="text-lg px-6 py-6 h-auto bg-white hover:bg-gray-100"
+              size="sm"
+              className="bg-white hover:bg-gray-100 text-sm px-3 py-2"
             >
-              <List className="mr-2 h-5 w-5" />
+              <List className="mr-1 h-4 w-4" />
               {showList ? 'Ocultar' : 'Listar'}
             </Button>
             <Button
               onClick={handleNew}
               variant="outline"
-              className="text-lg px-6 py-6 h-auto bg-white hover:bg-gray-100"
+              size="sm"
+              className="bg-white hover:bg-gray-100 text-sm px-3 py-2"
             >
-              <Plus className="mr-2 h-5 w-5" />
+              <Plus className="mr-1 h-4 w-4" />
               Nova
             </Button>
             <Button
               onClick={() => setPreviewMode(!previewMode)}
               variant="outline"
-              className="text-lg px-6 py-6 h-auto bg-white hover:bg-gray-100"
+              size="sm"
+              className="bg-white hover:bg-gray-100 text-sm px-3 py-2"
             >
-              <Eye className="mr-2 h-5 w-5" />
+              <Eye className="mr-1 h-4 w-4" />
               {previewMode ? 'Edição' : 'Preview'}
             </Button>
             <Button
               onClick={handleSave}
-              className="text-lg px-6 py-6 h-auto bg-[#FFCC00] text-gray-900 hover:bg-[#FFD700] font-bold"
+              size="sm"
+              className="bg-[#FFCC00] text-gray-900 hover:bg-[#FFD700] font-bold text-sm px-3 py-2"
             >
-              <Save className="mr-2 h-5 w-5" />
+              <Save className="mr-1 h-4 w-4" />
               Salvar
             </Button>
             <Button
               onClick={handleExportPNG}
-              className="text-lg px-6 py-6 h-auto bg-white text-[#003399] hover:bg-gray-100 font-bold"
+              size="sm"
+              className="bg-white text-[#003399] hover:bg-gray-100 font-bold text-sm px-3 py-2"
             >
-              <Download className="mr-2 h-5 w-5" />
+              <Download className="mr-1 h-4 w-4" />
               Exportar PNG
             </Button>
           </div>
