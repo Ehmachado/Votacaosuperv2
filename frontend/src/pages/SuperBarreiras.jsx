@@ -532,17 +532,44 @@ const SuperBarreiras = () => {
             {renderField('Rating', 'rating')}
           </div>
 
-          {/* Card 2 - Garantias e Seguros (Azul BB) */}
+          {/* Card 2 - Garantias Seguros e LC (Azul BB) */}
           <div className="rounded-lg shadow-lg p-3 space-y-2" style={{ backgroundColor: '#003399' }}>
-            <h2 className="text-xl font-bold text-white mb-2 pb-1 border-b-2 border-[#FFCC00]">Garantias e Seguros</h2>
+            <h2 className="text-xl font-bold text-white mb-2 pb-1 border-b-2 border-[#FFCC00]">Garantias Seguros e LC</h2>
             {renderField('Garantias', 'garantias')}
             {renderField('Pecuária: Quantidade de animais compatível com área do cliente?', 'pecuariaCompativel', 'select')}
             {renderField('Justifique', 'justifique', 'textarea')}
+            
+            {/* Limite de Crédito - Vigência e Risco */}
+            <div className="space-y-1.5">
+              <Label className="text-base font-semibold text-white">Limite de Crédito (Vigência e Risco)</Label>
+              <div className="grid grid-cols-2 gap-2">
+                <Select value={formData.limiteCreditoVigencia} onValueChange={(value) => handleChange('limiteCreditoVigencia', value)}>
+                  <SelectTrigger className="text-lg font-semibold py-2.5 h-auto bg-white">
+                    <SelectValue placeholder="Sim/Não" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="sim" className="text-lg">Sim</SelectItem>
+                    <SelectItem value="nao" className="text-lg">Não</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select value={formData.limiteCreditoRisco} onValueChange={(value) => handleChange('limiteCreditoRisco', value)}>
+                  <SelectTrigger className="text-lg font-semibold py-2.5 h-auto bg-white">
+                    <SelectValue placeholder="A-D" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="A" className="text-lg">A</SelectItem>
+                    <SelectItem value="B" className="text-lg">B</SelectItem>
+                    <SelectItem value="C" className="text-lg">C</SelectItem>
+                    <SelectItem value="D" className="text-lg">D</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            
+            {renderField('Condicionante do LC (Qual?)', 'condicionanteLC', 'textarea')}
             {renderField('Seguros (Quais?)', 'seguros')}
-            {renderField('Valor Operação', 'valorOperacao', 'money')}
             {renderField('RS contratado na operação', 'rsContratado', 'money')}
-            {renderField('Limite de Crédito (Vigência e Risco)', 'limiteCredito')}
-            {renderField('Condicionante do LC (Qual?)', 'condicionanteLC')}
+            {renderField('Valor da Operação', 'valorOperacao', 'money')}
           </div>
 
           {/* Card 3 - Receitas (Cinza escuro) */}
@@ -559,6 +586,8 @@ const SuperBarreiras = () => {
             {renderField('Receita Bruta Total Prevista', 'receitaBrutaPrevista', 'money')}
             {renderField('Resultado Operacional Agropecuário Obtido', 'resultadoObtido', 'money')}
             {renderField('Resultado Operacional Agropecuário Previsto', 'resultadoPrevisto', 'money')}
+            {renderField('Recursos líquidos', 'recursosLiquidos', 'money')}
+            {renderField('Patrimônio Total', 'patrimonioTotal', 'money')}
           </div>
 
           {/* Card 4 - Financeiro (Verde escuro) */}
