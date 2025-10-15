@@ -478,39 +478,39 @@ const SuperBarreiras = () => {
       )}
 
       {/* Main Content */}
-      <div id="export-container" className="mx-auto p-3" style={{ maxWidth: '1200px', aspectRatio: '3 / 3' }}>
+      <div id="export-container" className="mx-auto p-3" style={{ maxWidth: '1200px', aspectRatio: '3 / 3.5' }}>
         {/* Título para exportação */}
         <div className="text-center mb-3 py-2 bg-gradient-to-r from-[#003399] to-[#0055cc] rounded-lg">
-          <h2 className="text-lg font-bold text-white tracking-wide">ANÁLISE DE OPERAÇÕES SUPER BARREIRAS</h2>
+          <h2 className="text-xl font-bold text-white tracking-wide">ANÁLISE DE OPERAÇÕES SUPER BARREIRAS</h2>
         </div>
 
         {/* Campos do topo */}
-        <div className="rounded-lg shadow-md p-3 mb-3 grid grid-cols-2 gap-3" style={{ backgroundColor: '#E8E8E8' }}>
-          <div className="space-y-1">
-            <Label className="text-base font-semibold text-gray-800">Prefixo</Label>
+        <div className="rounded-lg shadow-md p-3 mb-3 grid grid-cols-2 gap-3" style={{ backgroundColor: '#D4AF37' }}>
+          <div className="space-y-1.5">
+            <Label className="text-base font-bold text-gray-900">Prefixo</Label>
             {previewMode ? (
-              <div className="text-lg font-semibold text-gray-900 bg-white px-3 py-2 rounded border border-gray-300">
+              <div className="text-lg font-semibold text-gray-900 bg-white px-3 py-2.5 rounded border border-gray-300">
                 {formData.prefixo || '-'}
               </div>
             ) : (
               <Input
                 value={formData.prefixo}
                 onChange={(e) => handleChange('prefixo', e.target.value)}
-                className="text-lg font-semibold py-2 h-auto bg-white"
+                className="text-lg font-semibold py-2.5 h-auto bg-white"
               />
             )}
           </div>
-          <div className="space-y-1">
-            <Label className="text-base font-semibold text-gray-800">Agência</Label>
+          <div className="space-y-1.5">
+            <Label className="text-base font-bold text-gray-900">Agência</Label>
             {previewMode ? (
-              <div className="text-lg font-semibold text-gray-900 bg-white px-3 py-2 rounded border border-gray-300">
+              <div className="text-lg font-semibold text-gray-900 bg-white px-3 py-2.5 rounded border border-gray-300">
                 {formData.agencia || '-'}
               </div>
             ) : (
               <Input
                 value={formData.agencia}
                 onChange={(e) => handleChange('agencia', e.target.value)}
-                className="text-lg font-semibold py-2 h-auto bg-white"
+                className="text-lg font-semibold py-2.5 h-auto bg-white"
               />
             )}
           </div>
