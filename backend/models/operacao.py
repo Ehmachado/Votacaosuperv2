@@ -20,6 +20,8 @@ class OperacaoBase(BaseModel):
     seguros: str = ''
     rsContratado: str = ''
     limiteCredito: str = ''
+    limiteCreditoVigencia: str = ''
+    limiteCreditoRisco: str = ''
     condicionanteLC: str = ''
     receitaBrutaClientes: str = ''
     receitaBrutaObtida: str = ''
