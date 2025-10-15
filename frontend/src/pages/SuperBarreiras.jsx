@@ -264,18 +264,18 @@ const SuperBarreiras = () => {
     if (type === 'money') {
       return (
         <div className="space-y-0.5">
-          <Label className="text-xs font-semibold text-white">{label}</Label>
+          <Label className="text-sm font-semibold text-white">{label}</Label>
           {previewMode ? (
-            <div className="text-sm font-semibold text-gray-900 bg-white px-2 py-1.5 rounded border border-gray-300">
+            <div className="text-base font-semibold text-gray-900 bg-white px-2 py-2 rounded border border-gray-300">
               R$ {formData[field] || '0,00'}
             </div>
           ) : (
             <div className="relative">
-              <span className="absolute left-2 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-600">R$</span>
+              <span className="absolute left-2 top-1/2 -translate-y-1/2 text-base font-semibold text-gray-600">R$</span>
               <Input
                 value={formData[field]}
                 onChange={(e) => handleMoneyChange(field, e.target.value)}
-                className="text-sm font-semibold pl-10 py-1.5 h-auto bg-white"
+                className="text-base font-semibold pl-11 py-2 h-auto bg-white"
                 placeholder="0,00"
               />
             </div>
@@ -287,16 +287,16 @@ const SuperBarreiras = () => {
     if (type === 'textarea') {
       return (
         <div className="space-y-0.5">
-          <Label className="text-xs font-semibold text-white">{label}</Label>
+          <Label className="text-sm font-semibold text-white">{label}</Label>
           {previewMode ? (
-            <div className="text-xs text-gray-900 bg-white px-2 py-1.5 rounded border border-gray-300 min-h-[50px] whitespace-pre-wrap">
+            <div className="text-sm text-gray-900 bg-white px-2 py-2 rounded border border-gray-300 min-h-[60px] whitespace-pre-wrap">
               {formData[field] || '-'}
             </div>
           ) : (
             <Textarea
               value={formData[field]}
               onChange={(e) => handleChange(field, e.target.value)}
-              className="text-xs min-h-[50px] resize-none bg-white py-1.5"
+              className="text-sm min-h-[60px] resize-none bg-white py-2"
             />
           )}
         </div>
@@ -306,20 +306,20 @@ const SuperBarreiras = () => {
     if (type === 'select') {
       return (
         <div className="space-y-0.5">
-          <Label className="text-xs font-semibold text-white">{label}</Label>
+          <Label className="text-sm font-semibold text-white">{label}</Label>
           {previewMode ? (
-            <div className="text-sm font-semibold text-gray-900 bg-white px-2 py-1.5 rounded border border-gray-300">
+            <div className="text-base font-semibold text-gray-900 bg-white px-2 py-2 rounded border border-gray-300">
               {formData[field] === 'sim' ? 'Sim' : formData[field] === 'nao' ? 'Não' : 'Não se aplica'}
             </div>
           ) : (
             <Select value={formData[field]} onValueChange={(value) => handleChange(field, value)}>
-              <SelectTrigger className="text-sm font-semibold py-1.5 h-auto bg-white">
+              <SelectTrigger className="text-base font-semibold py-2 h-auto bg-white">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="sim" className="text-sm">Sim</SelectItem>
-                <SelectItem value="nao" className="text-sm">Não</SelectItem>
-                <SelectItem value="naoSeAplica" className="text-sm">Não se aplica</SelectItem>
+                <SelectItem value="sim" className="text-base">Sim</SelectItem>
+                <SelectItem value="nao" className="text-base">Não</SelectItem>
+                <SelectItem value="naoSeAplica" className="text-base">Não se aplica</SelectItem>
               </SelectContent>
             </Select>
           )}
@@ -330,9 +330,9 @@ const SuperBarreiras = () => {
     if (type === 'date') {
       return (
         <div className="space-y-0.5">
-          <Label className="text-xs font-semibold text-white">{label}</Label>
+          <Label className="text-sm font-semibold text-white">{label}</Label>
           {previewMode ? (
-            <div className="text-sm font-semibold text-gray-900 bg-white px-2 py-1.5 rounded border border-gray-300">
+            <div className="text-base font-semibold text-gray-900 bg-white px-2 py-2 rounded border border-gray-300">
               {formData[field] || '-'}
             </div>
           ) : (
@@ -340,7 +340,7 @@ const SuperBarreiras = () => {
               type="date"
               value={formData[field]}
               onChange={(e) => handleChange(field, e.target.value)}
-              className="text-sm font-semibold py-1.5 h-auto bg-white"
+              className="text-base font-semibold py-2 h-auto bg-white"
             />
           )}
         </div>
@@ -349,16 +349,16 @@ const SuperBarreiras = () => {
 
     return (
       <div className="space-y-0.5">
-        <Label className="text-xs font-semibold text-white">{label}</Label>
+        <Label className="text-sm font-semibold text-white">{label}</Label>
         {previewMode ? (
-          <div className="text-sm font-semibold text-gray-900 bg-white px-2 py-1.5 rounded border border-gray-300">
+          <div className="text-base font-semibold text-gray-900 bg-white px-2 py-2 rounded border border-gray-300">
             {formData[field] || '-'}
           </div>
         ) : (
           <Input
             value={formData[field]}
             onChange={(e) => handleChange(field, e.target.value)}
-            className="text-sm font-semibold py-1.5 h-auto bg-white"
+            className="text-base font-semibold py-2 h-auto bg-white"
           />
         )}
       </div>
