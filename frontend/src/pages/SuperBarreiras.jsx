@@ -545,7 +545,7 @@ const SuperBarreiras = () => {
 
           {/* Card 3 - Receitas (Cinza escuro) */}
           <div className="rounded-lg shadow-lg p-3 space-y-2" style={{ backgroundColor: '#4A5568' }}>
-            <h2 className="text-lg font-bold text-white mb-2 pb-1 border-b-2 border-[#FFCC00]">Receitas e Garantias</h2>
+            <h2 className="text-xl font-bold text-white mb-2 pb-1 border-b-2 border-[#FFCC00]">Receitas e Garantias</h2>
             {renderField('Receita bruta - Clientes 03-20-41 Selecionar LC, F12-6-F9', 'receitaBrutaClientes', 'money')}
             {renderField('Receita Bruta Total Obtida', 'receitaBrutaObtida', 'money')}
             {renderField('Receita Bruta Total Prevista', 'receitaBrutaPrevista', 'money')}
