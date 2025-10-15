@@ -122,6 +122,8 @@ const SuperBarreiras = () => {
       seguros: '',
       rsContratado: '',
       limiteCredito: '',
+      limiteCreditoVigencia: '',
+      limiteCreditoRisco: '',
       condicionanteLC: '',
       receitaBrutaClientes: '',
       receitaBrutaObtida: '',
