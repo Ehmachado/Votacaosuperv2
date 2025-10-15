@@ -532,12 +532,14 @@ const SuperBarreiras = () => {
             {renderField('Rating', 'rating')}
           </div>
 
-          {/* Card 2 - Operação (Azul BB) */}
+          {/* Card 2 - Garantias e Seguros (Azul BB) */}
           <div className="rounded-lg shadow-lg p-3 space-y-2" style={{ backgroundColor: '#003399' }}>
-            <h2 className="text-xl font-bold text-white mb-2 pb-1 border-b-2 border-[#FFCC00]">Operação e Seguros</h2>
-            {renderField('Autorização Grão', 'autorizacaoGrao', 'textarea')}
-            {renderField('Valor Operação', 'valorOperacao', 'money')}
+            <h2 className="text-xl font-bold text-white mb-2 pb-1 border-b-2 border-[#FFCC00]">Garantias e Seguros</h2>
+            {renderField('Garantias', 'garantias')}
+            {renderField('Pecuária: Quantidade de animais compatível com área do cliente?', 'pecuariaCompativel', 'select')}
+            {renderField('Justifique', 'justifique', 'textarea')}
             {renderField('Seguros (Quais?)', 'seguros')}
+            {renderField('Valor Operação', 'valorOperacao', 'money')}
             {renderField('RS contratado na operação', 'rsContratado', 'money')}
             {renderField('Limite de Crédito (Vigência e Risco)', 'limiteCredito')}
             {renderField('Condicionante do LC (Qual?)', 'condicionanteLC')}
@@ -545,15 +547,18 @@ const SuperBarreiras = () => {
 
           {/* Card 3 - Receitas (Cinza escuro) */}
           <div className="rounded-lg shadow-lg p-3 space-y-2" style={{ backgroundColor: '#4A5568' }}>
-            <h2 className="text-xl font-bold text-white mb-2 pb-1 border-b-2 border-[#FFCC00]">Receitas e Garantias</h2>
-            {renderField('Receita bruta - Clientes 03-20-41 Selecionar LC, F12-6-F9', 'receitaBrutaClientes', 'money')}
+            <h2 className="text-xl font-bold text-white mb-2 pb-1 border-b-2 border-[#FFCC00]">Receitas</h2>
+            
+            {/* Subtítulo - não editável */}
+            <div className="bg-gray-700 p-2 rounded">
+              <p className="text-xs font-bold text-yellow-300 italic">Clientes 03-20-41 Selecionar LC, F12-6-F9</p>
+            </div>
+            
+            {renderField('Receita Bruta', 'receitaBrutaClientes', 'money')}
             {renderField('Receita Bruta Total Obtida', 'receitaBrutaObtida', 'money')}
             {renderField('Receita Bruta Total Prevista', 'receitaBrutaPrevista', 'money')}
             {renderField('Resultado Operacional Agropecuário Obtido', 'resultadoObtido', 'money')}
             {renderField('Resultado Operacional Agropecuário Previsto', 'resultadoPrevisto', 'money')}
-            {renderField('Pecuária: Quantidade de animais compatível com área do cliente?', 'pecuariaCompativel', 'select')}
-            {renderField('Justifique', 'justifique', 'textarea')}
-            {renderField('Garantias', 'garantias')}
           </div>
 
           {/* Card 4 - Financeiro (Verde escuro) */}
