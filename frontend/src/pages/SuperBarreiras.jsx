@@ -528,8 +528,8 @@ const SuperBarreiras = () => {
           </div>
 
           {/* Card 2 - Operação (Azul BB) */}
-          <div className="rounded-lg shadow-lg p-4 space-y-3" style={{ backgroundColor: '#003399' }}>
-            <h2 className="text-xl font-bold text-white mb-3 pb-2 border-b-2 border-[#FFCC00]">Operação e Seguros</h2>
+          <div className="rounded-lg shadow-lg p-3 space-y-2" style={{ backgroundColor: '#003399' }}>
+            <h2 className="text-lg font-bold text-white mb-2 pb-1 border-b-2 border-[#FFCC00]">Operação e Seguros</h2>
             {renderField('Autorização Grão', 'autorizacaoGrao', 'textarea')}
             {renderField('Valor Operação', 'valorOperacao', 'money')}
             {renderField('Seguros (Quais?)', 'seguros')}
