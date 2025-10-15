@@ -164,6 +164,8 @@ const SuperBarreiras = () => {
       seguros: operacao.seguros || '',
       rsContratado: operacao.rsContratado || '',
       limiteCredito: operacao.limiteCredito || '',
+      limiteCreditoVigencia: operacao.limiteCreditoVigencia || '',
+      limiteCreditoRisco: operacao.limiteCreditoRisco || '',
       condicionanteLC: operacao.condicionanteLC || '',
       receitaBrutaClientes: operacao.receitaBrutaClientes || '',
       receitaBrutaObtida: operacao.receitaBrutaObtida || '',
