@@ -478,18 +478,44 @@ const SuperBarreiras = () => {
       )}
 
       {/* Main Content */}
-      <div id="export-container" className="mx-auto p-4" style={{ maxWidth: '1400px', aspectRatio: '3 / 3.5' }}>
+      <div id="export-container" className="mx-auto p-3" style={{ maxWidth: '1200px', aspectRatio: '3 / 3.5' }}>
         {/* Campos do topo */}
-        <div className="bg-white rounded-lg shadow-md p-3 mb-3 grid grid-cols-2 gap-3">
-          {renderField('Prefixo', 'prefixo')}
-          {renderField('Agência', 'agencia')}
+        <div className="rounded-lg shadow-md p-3 mb-3 grid grid-cols-2 gap-3" style={{ backgroundColor: '#E8E8E8' }}>
+          <div className="space-y-1">
+            <Label className="text-sm font-semibold text-gray-800">Prefixo</Label>
+            {previewMode ? (
+              <div className="text-base font-semibold text-gray-900 bg-white px-3 py-2 rounded border border-gray-300">
+                {formData.prefixo || '-'}
+              </div>
+            ) : (
+              <Input
+                value={formData.prefixo}
+                onChange={(e) => handleChange('prefixo', e.target.value)}
+                className="text-base font-semibold py-2 h-auto bg-white"
+              />
+            )}
+          </div>
+          <div className="space-y-1">
+            <Label className="text-sm font-semibold text-gray-800">Agência</Label>
+            {previewMode ? (
+              <div className="text-base font-semibold text-gray-900 bg-white px-3 py-2 rounded border border-gray-300">
+                {formData.agencia || '-'}
+              </div>
+            ) : (
+              <Input
+                value={formData.agencia}
+                onChange={(e) => handleChange('agencia', e.target.value)}
+                className="text-base font-semibold py-2 h-auto bg-white"
+              />
+            )}
+          </div>
         </div>
 
         {/* Grid 2x2 dos 4 cards */}
         <div className="grid grid-cols-2 gap-3">
           {/* Card 1 - Dados Básicos (Amarelo BB) */}
-          <div className="rounded-lg shadow-lg p-4 space-y-3" style={{ backgroundColor: '#B8860B' }}>
-            <h2 className="text-xl font-bold text-white mb-3 pb-2 border-b-2 border-[#FFCC00]">Dados Básicos</h2>
+          <div className="rounded-lg shadow-lg p-3 space-y-2" style={{ backgroundColor: '#B8860B' }}>
+            <h2 className="text-lg font-bold text-white mb-2 pb-1 border-b-2 border-[#FFCC00]">Dados Básicos</h2>
             {renderField('Alçada', 'alcada')}
             {renderField('MCI', 'mci')}
             {renderField('Cliente', 'cliente')}
