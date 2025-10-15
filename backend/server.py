@@ -27,6 +27,8 @@ async def root():
     return {"message": "Super Barreiras API v1.0", "status": "online"}
 
 # Include operacoes routes
+from routes.operacoes import set_db
+set_db(db)
 api_router.include_router(operacoes_router, tags=["Operações"])
 
 # Include the router in the main app
