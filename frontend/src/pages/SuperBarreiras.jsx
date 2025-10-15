@@ -433,20 +433,20 @@ const SuperBarreiras = () => {
 
       {/* Lista de Operações */}
       {showList && (
-        <div className="max-w-[1600px] mx-auto p-6">
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <h2 className="text-3xl font-bold text-[#003399] mb-6">Operações Salvas</h2>
-            <div className="space-y-3">
+        <div className="mx-auto p-4" style={{ maxWidth: '1400px' }}>
+          <div className="bg-white rounded-xl shadow-lg p-4">
+            <h2 className="text-2xl font-bold text-[#003399] mb-4">Operações Salvas</h2>
+            <div className="space-y-2">
               {operacoes.length === 0 ? (
-                <p className="text-xl text-gray-600 text-center py-8">Nenhuma operação salva</p>
+                <p className="text-lg text-gray-600 text-center py-4">Nenhuma operação salva</p>
               ) : (
                 operacoes.map((op) => (
-                  <div key={op.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                  <div key={op.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
                     <div className="flex-1">
-                      <p className="text-xl font-bold text-gray-900">
+                      <p className="text-base font-bold text-gray-900">
                         {op.proposta || 'Sem proposta'} - {op.cliente || 'Sem cliente'}
                       </p>
-                      <p className="text-lg text-gray-600">
+                      <p className="text-sm text-gray-600">
                         Agência: {op.agencia || '-'} | Criado em: {new Date(op.createdAt).toLocaleDateString('pt-BR')}
                       </p>
                     </div>
@@ -454,17 +454,19 @@ const SuperBarreiras = () => {
                       <Button
                         onClick={() => handleLoad(op)}
                         variant="outline"
-                        className="text-lg px-4 py-2"
+                        size="sm"
+                        className="text-sm px-3 py-1"
                       >
-                        <Edit className="mr-2 h-4 w-4" />
+                        <Edit className="mr-1 h-3 w-3" />
                         Carregar
                       </Button>
                       <Button
                         onClick={() => handleDelete(op.id)}
                         variant="destructive"
-                        className="text-lg px-4 py-2"
+                        size="sm"
+                        className="text-sm px-3 py-1"
                       >
-                        <Trash2 className="h-4 w-4" />
+                        <Trash2 className="h-3 w-3" />
                       </Button>
                     </div>
                   </div>
