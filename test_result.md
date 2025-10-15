@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Testar o backend do SUPER BARREIRAS - Sistema de Análise de Operações do Banco do Brasil"
+user_problem_statement: "Testar o frontend do SUPER BARREIRAS - Sistema de Análise de Operações do Banco do Brasil"
 
 backend:
   - task: "API Health Check Endpoint"
