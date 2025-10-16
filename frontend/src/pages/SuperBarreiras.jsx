@@ -586,7 +586,6 @@ const SuperBarreiras = () => {
               <p className="text-xs font-bold text-yellow-300 italic">Clientes 03-20-41 Selecionar LC, F12-6-F9</p>
             </div>
             
-            {renderField('Receita Bruta', 'receitaBrutaClientes', 'money')}
             {renderField('Receita Bruta Total Obtida', 'receitaBrutaObtida', 'money')}
             {renderField('Receita Bruta Total Prevista', 'receitaBrutaPrevista', 'money')}
             {renderField('Resultado Operacional Agropecuário Obtido', 'resultadoObtido', 'money')}
