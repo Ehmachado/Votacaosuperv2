@@ -106,7 +106,6 @@ function saveOperation() {
         condicionanteLC: document.getElementById('condicionanteLC').value,
         seguros: document.getElementById('seguros').value,
         rsContratado: document.getElementById('rsContratado').value,
-        receitaBrutaClientes: document.getElementById('receitaBrutaClientes').value,
         receitaBrutaObtida: document.getElementById('receitaBrutaObtida').value,
         receitaBrutaPrevista: document.getElementById('receitaBrutaPrevista').value,
         resultadoObtido: document.getElementById('resultadoObtido').value,
