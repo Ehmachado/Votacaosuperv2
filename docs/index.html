@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUPER BARREIRAS - Análise de Operações</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <img src="https://logodownload.org/wp-content/uploads/2014/05/banco-do-brasil-logo-1.png" alt="Banco do Brasil" class="logo">
+                <div>
+                    <h1 class="title">SUPER BARREIRAS</h1>
+                    <span class="subtitle">Análise de Operações</span>
+                </div>
+            </div>
+        </div>
+        <div class="button-group">
+            <button onclick="toggleList()" class="btn btn-white" id="btnList">
+                <span>📋</span> Listar
+            </button>
+            <button onclick="newOperation()" class="btn btn-white">
+                <span>➕</span> Nova
+            </button>
+            <button onclick="togglePreview()" class="btn btn-white" id="btnPreview">
+                <span>👁</span> Preview
+            </button>
+            <button onclick="saveOperation()" class="btn btn-yellow">
+                <span>💾</span> Salvar
+            </button>
+            <button onclick="exportToPNG()" class="btn btn-white">
+                <span>📥</span> Exportar PNG
+            </button>
+        </div>
+    </div>
+
+    <!-- Lista de Operações -->
+    <div id="listContainer" class="list-container" style="display: none;">
+        <div class="list-card">
+            <h2 class="list-title">Operações Salvas</h2>
+            <div id="operationsList" class="operations-list"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="exportContainer" class="export-container">
+        <!-- Título -->
+        <div class="main-title">
+            <h2>ANÁLISE DE OPERAÇÕES SUPER BARREIRAS</h2>
+        </div>
+
+        <!-- Prefixo e Agência -->
+        <div class="top-fields">
+            <div class="field-group">
+                <label class="field-label-dark">Prefixo</label>
+                <input type="text" id="prefixo" class="field-input" />
+            </div>
+            <div class="field-group">
+                <label class="field-label-dark">Agência</label>
+                <input type="text" id="agencia" class="field-input" />
+            </div>
+        </div>
+
+        <!-- Grid 2x2 -->
+        <div class="cards-grid">
+            <!-- Card 1: Dados Básicos -->
+            <div class="card card-yellow">
+                <h2 class="card-title">Dados Básicos</h2>
+                <div class="field-group">
+                    <label class="field-label">Valor da Operação</label>
+                    <div class="money-input">
+                        <span class="money-prefix">R$</span>
+                        <input type="text" id="valorOperacao" class="field-input" oninput="formatMoney(this)" />
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">MCI</label>
+                    <input type="text" id="mci" class="field-input" />
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Cliente</label>
+                    <input type="text" id="cliente" class="field-input" />
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Idade do Cliente</label>
+                    <input type="text" id="idadeCliente" class="field-input" />
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Cliente desde</label>
+                    <input type="date" id="clienteDesde" class="field-input" />
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Proposta</label>
+                    <input type="text" id="proposta" class="field-input" />
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Linha de Crédito</label>
+                    <input type="text" id="linhaCredito" class="field-input" />
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Item Financiado</label>
+                    <input type="text" id="itemFinanciado" class="field-input" />
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Rating</label>
+                    <input type="text" id="rating" class="field-input" />
+                </div>
+            </div>
+
+            <!-- Card 2: Garantias Seguros e LC -->
+            <div class="card card-blue">
+                <h2 class="card-title">Garantias Seguros e LC</h2>
+                <div class="field-group">
+                    <label class="field-label">Garantias</label>
+                    <input type="text" id="garantias" class="field-input" />
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Pecuária: Quantidade de animais compatível com área do cliente?</label>
+                    <select id="pecuariaCompativel" class="field-input">
+                        <option value="sim">Sim</option>
+                        <option value="nao">Não</option>
+                        <option value="naoSeAplica" selected>Não se aplica</option>
+                    </select>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Justifique</label>
+                    <textarea id="justifique" class="field-textarea"></textarea>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Limite de Crédito (Vigência e Risco)</label>
+                    <div class="dual-select">
+                        <select id="limiteCreditoVigencia" class="field-input">
+                            <option value="">Sim/Não</option>
+                            <option value="sim">Sim</option>
+                            <option value="nao">Não</option>
+                        </select>
+                        <select id="limiteCreditoRisco" class="field-input">
+                            <option value="">A-D</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Condicionante do LC (Qual?)</label>
+                    <textarea id="condicionanteLC" class="field-textarea"></textarea>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Seguros (Quais?)</label>
+                    <input type="text" id="seguros" class="field-input" />
+                </div>
+                <div class="field-group">
+                    <label class="field-label">RS contratado na operação</label>
+                    <div class="money-input">
+                        <span class="money-prefix">R$</span>
+                        <input type="text" id="rsContratado" class="field-input" oninput="formatMoney(this)" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Receitas -->
+            <div class="card card-gray">
+                <h2 class="card-title">Receitas</h2>
+                <div class="subtitle-box">
+                    <p>Clientes 03-20-41 Selecionar LC, F12-6-F9</p>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Receita Bruta</label>
+                    <div class="money-input">
+                        <span class="money-prefix">R$</span>
+                        <input type="text" id="receitaBrutaClientes" class="field-input" oninput="formatMoney(this)" />
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Receita Bruta Total Obtida</label>
+                    <div class="money-input">
+                        <span class="money-prefix">R$</span>
+                        <input type="text" id="receitaBrutaObtida" class="field-input" oninput="formatMoney(this)" />
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Receita Bruta Total Prevista</label>
+                    <div class="money-input">
+                        <span class="money-prefix">R$</span>
+                        <input type="text" id="receitaBrutaPrevista" class="field-input" oninput="formatMoney(this)" />
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Resultado Operacional Agropecuário Obtido</label>
+                    <div class="money-input">
+                        <span class="money-prefix">R$</span>
+                        <input type="text" id="resultadoObtido" class="field-input" oninput="formatMoney(this)" />
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Resultado Operacional Agropecuário Previsto</label>
+                    <div class="money-input">
+                        <span class="money-prefix">R$</span>
+                        <input type="text" id="resultadoPrevisto" class="field-input" oninput="formatMoney(this)" />
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Recursos líquidos</label>
+                    <div class="money-input">
+                        <span class="money-prefix">R$</span>
+                        <input type="text" id="recursosLiquidos" class="field-input" oninput="formatMoney(this)" />
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Patrimônio Total</label>
+                    <div class="money-input">
+                        <span class="money-prefix">R$</span>
+                        <input type="text" id="patrimonioTotal" class="field-input" oninput="formatMoney(this)" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: Dados Financeiros -->
+            <div class="card card-green">
+                <h2 class="card-title">Dados Financeiros</h2>
+                <div class="share-box">
+                    <label class="share-label">Share BB (calculado automaticamente)</label>
+                    <div id="shareBB" class="share-value">0,00%</div>
+                    <p class="share-info">Endividamento BB ÷ Endividamento SFN</p>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Endividamento no SFN</label>
+                    <div class="money-input">
+                        <span class="money-prefix">R$</span>
+                        <input type="text" id="endividamentoSFN" class="field-input" oninput="formatMoney(this); calculateShareBB()" />
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Endividamento no BB</label>
+                    <div class="money-input">
+                        <span class="money-prefix">R$</span>
+                        <input type="text" id="endividamentoBB" class="field-input" oninput="formatMoney(this); calculateShareBB()" />
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Inad Agro Agência (rel 5398)</label>
+                    <div class="money-input">
+                        <span class="money-prefix">R$</span>
+                        <input type="text" id="inadAgroAgencia" class="field-input" oninput="formatMoney(this)" />
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Proposta Customizada</label>
+                    <select id="propostaCustomizada" class="field-input">
+                        <option value="sim">Sim</option>
+                        <option value="nao">Não</option>
+                        <option value="naoSeAplica" selected>Não se aplica</option>
+                    </select>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">% de operações do cliente Com garantia Hipotecária</label>
+                    <input type="text" id="percentualGarantiaHipotecaria" class="field-input" />
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Rende Fácil</label>
+                    <select id="rendeFacil" class="field-input">
+                        <option value="sim">Sim</option>
+                        <option value="nao">Não</option>
+                        <option value="naoSeAplica" selected>Não se aplica</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
