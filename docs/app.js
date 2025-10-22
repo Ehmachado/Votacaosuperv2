@@ -209,6 +209,11 @@ function exportToPNG() {
     
     setTimeout(() => {
 
+        // Ensure scroll is neutral to avoid quadrant cropping
+        const __prevScroll = { x: window.scrollX, y: window.scrollY };
+        window.scrollTo(0, 0);
+
+
         // --- LOCK CAPTURE AREA to current container box ---
         (function(){
             const el = document.getElementById('exportContainer');
@@ -280,10 +285,17 @@ function exportToPNG() {
         });
     })();
     // --- end single change ---
-        html2canvas(document.getElementById('exportContainer'), { foreignObjectRendering: true,
+        html2canvas(document.getElementById('exportContainer'), {
             scale: 2,
             backgroundColor: '#e8f7ff',
-            logging: false
+            logging: false,
+            foreignObjectRendering: true,
+            useCORS: true,
+            allowTaint: true,
+            scrollX: -window.scrollX,
+            scrollY: -window.scrollY,
+            width: document.getElementById('exportContainer').getBoundingClientRect().width,
+            height: document.getElementById('exportContainer').getBoundingClientRect().height
         }).then(canvas => {
             const link = document.createElement('a');
             const proposta = document.getElementById('proposta').value || 'sem-proposta';
@@ -317,6 +329,10 @@ function exportToPNG() {
                     window.__exportLock = null;
                 }
             })();
+
+            
+            // Restore previous scroll
+            window.scrollTo(__prevScroll.x, __prevScroll.y);
 
             alert('Imagem PNG exportada com sucesso!');
         });
