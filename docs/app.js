@@ -208,6 +208,23 @@ function exportToPNG() {
     }
     
     setTimeout(() => {
+
+    // --- Auto-expand textareas to fit content before capture (single change) ---
+    (function() {
+        const idsToExpand = ['justifique','condicionanteLC'];
+        window.__prevHeights = {};
+        idsToExpand.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                window.__prevHeights[id] = el.style.height;
+                el.style.height = 'auto';
+                el.style.overflow = 'visible';
+                el.style.whiteSpace = 'pre-wrap';
+                el.style.height = el.scrollHeight + 'px';
+            }
+        });
+    })();
+    // --- end single change ---
         html2canvas(document.getElementById('exportContainer'), {
             scale: 2,
             backgroundColor: '#e8f7ff',
