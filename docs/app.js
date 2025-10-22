@@ -209,6 +209,20 @@ function exportToPNG() {
     
     setTimeout(() => {
 
+        // --- LOCK CAPTURE AREA to current container box ---
+        (function(){
+            const el = document.getElementById('exportContainer');
+            if (!el) return;
+            const rect = el.getBoundingClientRect();
+            window.__exportLock = {
+                prevHeight: el.style.height,
+                prevAspect: el.style.aspectRatio
+            };
+            el.style.height = rect.height + 'px';
+            el.style.aspectRatio = 'unset';
+        })();
+        // --- END LOCK ---
+
         // --- PRINT CLONES for multi-line textareas (single functional change) ---
         (function() {
             const ids = ['justifique', 'condicionanteLC'];
@@ -290,6 +304,17 @@ function exportToPNG() {
                         if (ta) ta.style.display = '';
                     });
                     window.__printClones = null;
+                }
+            })();
+
+            
+            // restore locked container dimensions
+            (function(){
+                const el = document.getElementById('exportContainer');
+                if (el && window.__exportLock){
+                    el.style.height = window.__exportLock.prevHeight || '';
+                    el.style.aspectRatio = window.__exportLock.prevAspect || '';
+                    window.__exportLock = null;
                 }
             })();
 
