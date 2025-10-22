@@ -209,6 +209,47 @@ function exportToPNG() {
     
     setTimeout(() => {
 
+        // --- PRINT CLONES for multi-line textareas (single functional change) ---
+        (function() {
+            const ids = ['justifique', 'condicionanteLC'];
+            window.__printClones = [];
+            ids.forEach((id)=>{
+                const ta = document.getElementById(id);
+                if(!ta) return;
+                // compute width to match layout
+                const cs = window.getComputedStyle(ta);
+                const clone = document.createElement('div');
+                clone.setAttribute('data-print-clone-for', id);
+                // copy basic text styles to match rendering
+                clone.style.fontFamily = cs.fontFamily;
+                clone.style.fontSize = cs.fontSize;
+                clone.style.lineHeight = cs.lineHeight;
+                clone.style.padding = cs.padding;
+                clone.style.border = cs.border;
+                clone.style.borderRadius = cs.borderRadius;
+                clone.style.boxSizing = cs.boxSizing;
+                clone.style.background = cs.backgroundColor;
+                clone.style.color = cs.color;
+                clone.style.width = ta.offsetWidth + 'px';
+                clone.style.minHeight = '0px';
+                clone.style.whiteSpace = 'pre-wrap';
+                clone.style.wordBreak = 'break-word';
+                clone.style.overflow = 'visible';
+                clone.style.display = 'block';
+                clone.style.margin = cs.margin;
+                
+                // set text content with line breaks
+                clone.textContent = ta.value;
+                
+                // Insert clone right after textarea and hide original
+                ta.style.display = 'none';
+                ta.insertAdjacentElement('afterend', clone);
+                window.__printClones.push({ id, ta, clone, displayBackup: '' });
+            });
+        })();
+        // --- END PRINT CLONES ---
+
+
     // --- Auto-expand textareas to fit content before capture (single change) ---
     (function() {
         const idsToExpand = ['justifique','condicionanteLC'];
@@ -225,7 +266,7 @@ function exportToPNG() {
         });
     })();
     // --- end single change ---
-        html2canvas(document.getElementById('exportContainer'), {
+        html2canvas(document.getElementById('exportContainer'), { foreignObjectRendering: true,
             scale: 2,
             backgroundColor: '#e8f7ff',
             logging: false
@@ -240,6 +281,18 @@ function exportToPNG() {
                 togglePreview();
             }
             
+            
+            // --- RESTORE after capture ---
+            (function(){
+                if (window.__printClones) {
+                    window.__printClones.forEach(({ta, clone})=>{
+                        if (clone && clone.parentNode) clone.parentNode.removeChild(clone);
+                        if (ta) ta.style.display = '';
+                    });
+                    window.__printClones = null;
+                }
+            })();
+
             alert('Imagem PNG exportada com sucesso!');
         });
     }, 100);
