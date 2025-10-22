@@ -209,157 +209,40 @@ function exportToPNG() {
     
     setTimeout(() => {
 
-        // ===== ROBUST CLONE-AND-CAPTURE (single functional change) =====
-        (function(){
-            const src = document.getElementById('exportContainer');
-            if (!src) return;
-            // Create a fixed wrapper to avoid scroll/viewport offsets
-            const rect = src.getBoundingClientRect();
-            const wrapper = document.createElement('div');
-            wrapper.id = '__captureWrapper';
-            wrapper.style.position = 'fixed';
-            wrapper.style.top = '0';
-            wrapper.style.left = '0';
-            wrapper.style.zIndex = '2147483647';
-            wrapper.style.background = getComputedStyle(document.body).backgroundColor || '#e8f7ff';
-            wrapper.style.width = rect.width + 'px';
-            wrapper.style.padding = '0';
-            wrapper.style.margin = '0';
-
-            // Deep clone
-            const clone = src.cloneNode(true);
-            // Avoid aspect-ratio collapsing in the clone
-            clone.style.aspectRatio = 'unset';
-            clone.style.height = 'auto';
-            clone.style.maxWidth = rect.width + 'px';
-            clone.style.width = rect.width + 'px';
-
-            // Replace the two textareas by block divs with pre-wrapped text
-            const idsToReplace = ['justifique','condicionanteLC'];
-            idsToReplace.forEach(id => {
-                const original = document.getElementById(id);
-                const inClone = clone.querySelector('#' + id);
-                if (original && inClone) {
-                    const cs = getComputedStyle(original);
-                    const div = document.createElement('div');
-                    div.setAttribute('data-clone-for', id);
-                    div.textContent = original.value;
-                    // Copy essential text styles
-                    div.style.fontFamily = cs.fontFamily;
-                    div.style.fontSize = cs.fontSize;
-                    div.style.lineHeight = cs.lineHeight;
-                    div.style.padding = cs.padding;
-                    div.style.border = cs.border;
-                    div.style.borderRadius = cs.borderRadius;
-                    div.style.boxSizing = cs.boxSizing;
-                    div.style.background = cs.backgroundColor;
-                    div.style.color = cs.color;
-                    div.style.whiteSpace = 'pre-wrap';
-                    div.style.wordBreak = 'break-word';
-                    div.style.width = inClone.offsetWidth + 'px';
-                    // Replace in clone
-                    inClone.parentNode.replaceChild(div, inClone);
-                }
-            });
-
-            // Mount wrapper
-            wrapper.appendChild(clone);
-            document.body.appendChild(wrapper);
-
-            // Compute final height after layout
-            wrapper.style.height = wrapper.scrollHeight + 'px';
-            // Expose for export and cleanup
-            window.__captureWrapper = wrapper;
-        })();
-        // ===== END CLONE-AND-CAPTURE =====
-
-        // Ensure scroll is neutral to avoid quadrant cropping
-        const __prevScroll = { x: window.scrollX, y: window.scrollY };
-        window.scrollTo(0, 0);
-
-
-        // --- LOCK CAPTURE AREA to current container box ---
-        (function(){
-            const el = document.getElementById('exportContainer');
-            if (!el) return;
-            const rect = el.getBoundingClientRect();
-            window.__exportLock = {
-                prevHeight: el.style.height,
-                prevAspect: el.style.aspectRatio
-            };
-            el.style.height = rect.height + 'px';
-            el.style.aspectRatio = 'unset';
-        })();
-        // --- END LOCK ---
-
-        // --- PRINT CLONES for multi-line textareas (single functional change) ---
-        (function() {
-            const ids = ['justifique', 'condicionanteLC'];
-            window.__printClones = [];
-            ids.forEach((id)=>{
-                const ta = document.getElementById(id);
-                if(!ta) return;
-                // compute width to match layout
-                const cs = window.getComputedStyle(ta);
-                const clone = document.createElement('div');
-                clone.setAttribute('data-print-clone-for', id);
-                // copy basic text styles to match rendering
-                clone.style.fontFamily = cs.fontFamily;
-                clone.style.fontSize = cs.fontSize;
-                clone.style.lineHeight = cs.lineHeight;
-                clone.style.padding = cs.padding;
-                clone.style.border = cs.border;
-                clone.style.borderRadius = cs.borderRadius;
-                clone.style.boxSizing = cs.boxSizing;
-                clone.style.background = cs.backgroundColor;
-                clone.style.color = cs.color;
-                clone.style.width = ta.offsetWidth + 'px';
-                clone.style.minHeight = '0px';
-                clone.style.whiteSpace = 'pre-wrap';
-                clone.style.wordBreak = 'break-word';
-                clone.style.overflow = 'visible';
-                clone.style.display = 'block';
-                clone.style.margin = cs.margin;
-                
-                // set text content with line breaks
-                clone.textContent = ta.value;
-                
-                // Insert clone right after textarea and hide original
-                ta.style.display = 'none';
-                ta.insertAdjacentElement('afterend', clone);
-                window.__printClones.push({ id, ta, clone, displayBackup: '' });
-            });
-        })();
-        // --- END PRINT CLONES ---
-
-
-    // --- Auto-expand textareas to fit content before capture (single change) ---
-    (function() {
-        const idsToExpand = ['justifique','condicionanteLC'];
-        window.__prevHeights = {};
-        idsToExpand.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) {
-                window.__prevHeights[id] = el.style.height;
-                el.style.height = 'auto';
-                el.style.overflow = 'visible';
-                el.style.whiteSpace = 'pre-wrap';
-                el.style.height = el.scrollHeight + 'px';
-            }
+    // === BEGIN: textarea clones for full text capture ===
+    (function(){
+        const ids = ['justifique','condicionanteLC'];
+        window.__taBackups = [];
+        ids.forEach(id => {
+            const ta = document.getElementById(id);
+            if(!ta) return;
+            const cs = getComputedStyle(ta);
+            const div = document.createElement('div');
+            div.setAttribute('data-ta-clone', id);
+            div.textContent = ta.value;
+            div.style.fontFamily = cs.fontFamily;
+            div.style.fontSize = cs.fontSize;
+            div.style.lineHeight = cs.lineHeight;
+            div.style.padding = cs.padding;
+            div.style.border = cs.border;
+            div.style.borderRadius = cs.borderRadius;
+            div.style.boxSizing = cs.boxSizing;
+            div.style.background = cs.backgroundColor;
+            div.style.color = cs.color;
+            div.style.whiteSpace = 'pre-wrap';
+            div.style.wordBreak = 'break-word';
+            div.style.width = ta.offsetWidth + 'px';
+            window.__taBackups.push({ ta, display: ta.style.display });
+            ta.style.display = 'none';
+            ta.insertAdjacentElement('afterend', div);
         });
     })();
-    // --- end single change ---
-        html2canvas(window.__captureWrapper || document.getElementById('exportContainer'), { foreignObjectRendering: true, useCORS: true, scrollX: 0, scrollY: 0, windowWidth: (window.__captureWrapper ? window.__captureWrapper.offsetWidth : document.documentElement.clientWidth), windowHeight: (window.__captureWrapper ? window.__captureWrapper.offsetHeight : document.documentElement.clientHeight),
+    // === END: textarea clones ===
+
+        html2canvas(document.getElementById('exportContainer'), {
             scale: 2,
             backgroundColor: '#e8f7ff',
-            logging: false,
-            foreignObjectRendering: true,
-            useCORS: true,
-            allowTaint: true,
-            scrollX: -window.scrollX,
-            scrollY: -window.scrollY,
-            width: document.getElementById('exportContainer').getBoundingClientRect().width,
-            height: document.getElementById('exportContainer').getBoundingClientRect().height
+            logging: false
         }).then(canvas => {
             const link = document.createElement('a');
             const proposta = document.getElementById('proposta').value || 'sem-proposta';
@@ -372,38 +255,15 @@ function exportToPNG() {
             }
             
             
-            // --- RESTORE after capture ---
+            // === RESTORE: remove clones and show textareas ===
             (function(){
-                if (window.__printClones) {
-                    window.__printClones.forEach(({ta, clone})=>{
-                        if (clone && clone.parentNode) clone.parentNode.removeChild(clone);
-                        if (ta) ta.style.display = '';
-                    });
-                    window.__printClones = null;
+                const clones = document.querySelectorAll('[data-ta-clone]');
+                clones.forEach(c => c.parentNode && c.parentNode.removeChild(c));
+                if (window.__taBackups){
+                    window.__taBackups.forEach(b => { if (b.ta) b.ta.style.display = b.display || ''; });
+                    window.__taBackups = null;
                 }
             })();
-
-            
-            // restore locked container dimensions
-            (function(){
-                const el = document.getElementById('exportContainer');
-                if (el && window.__exportLock){
-                    el.style.height = window.__exportLock.prevHeight || '';
-                    el.style.aspectRatio = window.__exportLock.prevAspect || '';
-                    window.__exportLock = null;
-                }
-            })();
-
-            
-            // Restore previous scroll
-            window.scrollTo(__prevScroll.x, __prevScroll.y);
-
-            
-            // Remove temporary wrapper
-            if (window.__captureWrapper && window.__captureWrapper.parentNode){
-                window.__captureWrapper.parentNode.removeChild(window.__captureWrapper);
-                window.__captureWrapper = null;
-            }
 
             alert('Imagem PNG exportada com sucesso!');
         });
