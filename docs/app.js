@@ -209,6 +209,70 @@ function exportToPNG() {
     
     setTimeout(() => {
 
+        // ===== ROBUST CLONE-AND-CAPTURE (single functional change) =====
+        (function(){
+            const src = document.getElementById('exportContainer');
+            if (!src) return;
+            // Create a fixed wrapper to avoid scroll/viewport offsets
+            const rect = src.getBoundingClientRect();
+            const wrapper = document.createElement('div');
+            wrapper.id = '__captureWrapper';
+            wrapper.style.position = 'fixed';
+            wrapper.style.top = '0';
+            wrapper.style.left = '0';
+            wrapper.style.zIndex = '2147483647';
+            wrapper.style.background = getComputedStyle(document.body).backgroundColor || '#e8f7ff';
+            wrapper.style.width = rect.width + 'px';
+            wrapper.style.padding = '0';
+            wrapper.style.margin = '0';
+
+            // Deep clone
+            const clone = src.cloneNode(true);
+            // Avoid aspect-ratio collapsing in the clone
+            clone.style.aspectRatio = 'unset';
+            clone.style.height = 'auto';
+            clone.style.maxWidth = rect.width + 'px';
+            clone.style.width = rect.width + 'px';
+
+            // Replace the two textareas by block divs with pre-wrapped text
+            const idsToReplace = ['justifique','condicionanteLC'];
+            idsToReplace.forEach(id => {
+                const original = document.getElementById(id);
+                const inClone = clone.querySelector('#' + id);
+                if (original && inClone) {
+                    const cs = getComputedStyle(original);
+                    const div = document.createElement('div');
+                    div.setAttribute('data-clone-for', id);
+                    div.textContent = original.value;
+                    // Copy essential text styles
+                    div.style.fontFamily = cs.fontFamily;
+                    div.style.fontSize = cs.fontSize;
+                    div.style.lineHeight = cs.lineHeight;
+                    div.style.padding = cs.padding;
+                    div.style.border = cs.border;
+                    div.style.borderRadius = cs.borderRadius;
+                    div.style.boxSizing = cs.boxSizing;
+                    div.style.background = cs.backgroundColor;
+                    div.style.color = cs.color;
+                    div.style.whiteSpace = 'pre-wrap';
+                    div.style.wordBreak = 'break-word';
+                    div.style.width = inClone.offsetWidth + 'px';
+                    // Replace in clone
+                    inClone.parentNode.replaceChild(div, inClone);
+                }
+            });
+
+            // Mount wrapper
+            wrapper.appendChild(clone);
+            document.body.appendChild(wrapper);
+
+            // Compute final height after layout
+            wrapper.style.height = wrapper.scrollHeight + 'px';
+            // Expose for export and cleanup
+            window.__captureWrapper = wrapper;
+        })();
+        // ===== END CLONE-AND-CAPTURE =====
+
         // Ensure scroll is neutral to avoid quadrant cropping
         const __prevScroll = { x: window.scrollX, y: window.scrollY };
         window.scrollTo(0, 0);
@@ -285,7 +349,7 @@ function exportToPNG() {
         });
     })();
     // --- end single change ---
-        html2canvas(document.getElementById('exportContainer'), {
+        html2canvas(window.__captureWrapper || document.getElementById('exportContainer'), { foreignObjectRendering: true, useCORS: true, scrollX: 0, scrollY: 0, windowWidth: (window.__captureWrapper ? window.__captureWrapper.offsetWidth : document.documentElement.clientWidth), windowHeight: (window.__captureWrapper ? window.__captureWrapper.offsetHeight : document.documentElement.clientHeight),
             scale: 2,
             backgroundColor: '#e8f7ff',
             logging: false,
@@ -333,6 +397,13 @@ function exportToPNG() {
             
             // Restore previous scroll
             window.scrollTo(__prevScroll.x, __prevScroll.y);
+
+            
+            // Remove temporary wrapper
+            if (window.__captureWrapper && window.__captureWrapper.parentNode){
+                window.__captureWrapper.parentNode.removeChild(window.__captureWrapper);
+                window.__captureWrapper = null;
+            }
 
             alert('Imagem PNG exportada com sucesso!');
         });
