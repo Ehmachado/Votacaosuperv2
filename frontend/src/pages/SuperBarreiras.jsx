@@ -248,26 +248,51 @@ const SuperBarreiras = () => {
     setPreviewMode(true);
     setTimeout(async () => {
       const element = document.getElementById('export-container');
-      // Aplica o zoom antes da exportação
-      element.style.transform = 'scale(1.3)';
-      element.style.transformOrigin = 'top left';
+      
+      // Salva os estilos originais
+      const originalStyles = new Map();
+      const elements = element.querySelectorAll('*');
+      
+      // Aplica o aumento de fonte em todos os elementos
+      elements.forEach(el => {
+        const computedStyle = window.getComputedStyle(el);
+        originalStyles.set(el, {
+          fontSize: computedStyle.fontSize,
+          lineHeight: computedStyle.lineHeight
+        });
+        
+        const currentSize = parseFloat(computedStyle.fontSize);
+        const newSize = currentSize * 1.3;
+        el.style.fontSize = `${newSize}px`;
+        
+        // Ajusta a altura da linha proporcionalmente
+        const currentLineHeight = parseFloat(computedStyle.lineHeight);
+        if (!isNaN(currentLineHeight)) {
+          el.style.lineHeight = `${currentLineHeight * 1.3}px`;
+        }
+      });
       
       const canvas = await html2canvas(element, {
         scale: 2,
         backgroundColor: '#e8f7ff',
         logging: false,
-        width: element.offsetWidth * 1.3,
-        height: element.offsetHeight * 1.3
+        useCORS: true,
+        allowTaint: true
+      });
+      
+      // Restaura os estilos originais
+      elements.forEach(el => {
+        const original = originalStyles.get(el);
+        if (original) {
+          el.style.fontSize = original.fontSize;
+          el.style.lineHeight = original.lineHeight;
+        }
       });
       
       const link = document.createElement('a');
       link.download = `analise-operacao-${formData.proposta || 'sem-proposta'}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
-      
-      // Restaura o tamanho original
-      element.style.transform = '';
-      element.style.transformOrigin = '';
       
       setPreviewMode(false);
       toast({
