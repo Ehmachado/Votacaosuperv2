@@ -491,11 +491,7 @@ const SuperBarreiras = () => {
       {/* Main Content */}
       <div id="export-container" className="mx-auto p-3" style={{ maxWidth: '1200px', aspectRatio: '3 / 3.5' }}>
         {/* Container para exportação com zoom */}
-        <div id="zoom-container" style={{ 
-          transform: previewMode ? 'scale(1.5)' : 'none',
-          transformOrigin: 'top left',
-          transition: 'transform 0.3s ease'
-        }}>
+        <div id="zoom-container">
           {/* Título para exportação */}
           <div className="text-center mb-3 py-2 bg-gradient-to-r from-[#003399] to-[#0055cc] rounded-lg">
             <h2 className="text-xl font-bold text-white tracking-wide">ANÁLISE DE OPERAÇÕES SUPER BARREIRAS</h2>
