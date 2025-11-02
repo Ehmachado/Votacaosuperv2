@@ -492,7 +492,7 @@ const SuperBarreiras = () => {
       <div id="export-container" className="mx-auto p-3" style={{ maxWidth: '1200px', aspectRatio: '3 / 3.5' }}>
         {/* Container para exportação com zoom */}
         <div id="zoom-container" style={{ 
-          transform: previewMode ? 'scale(2)' : 'none',
+          transform: previewMode ? 'scale(1.5)' : 'none',
           transformOrigin: 'top left',
           transition: 'transform 0.3s ease'
         }}>

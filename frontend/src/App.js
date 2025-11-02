@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SuperBarreiras from "./pages/SuperBarreiras";
 import { Toaster } from "./components/ui/toaster";
 import "./App.css";
+import "./styles/global.css";
 
 function App() {
   return (
