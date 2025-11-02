@@ -246,70 +246,17 @@ const SuperBarreiras = () => {
   const handleExportPNG = async () => {
     setPreviewMode(true);
     setTimeout(async () => {
-      const element = document.getElementById('export-container');
-      
-      // Salva os estilos originais
-      const originalStyles = new Map();
-      const elements = element.querySelectorAll('*');
-      
-      // Aplica o zoom em todos os elementos
-      elements.forEach(el => {
-        const style = window.getComputedStyle(el);
-        originalStyles.set(el, {
-          fontSize: style.fontSize,
-          lineHeight: style.lineHeight,
-          padding: style.padding,
-          margin: style.margin
-        });
-        
-        const currentSize = parseFloat(style.fontSize);
-        const newSize = currentSize * 2; // Dobra o tamanho da fonte
-        el.style.fontSize = `${newSize}px`;
-        
-        // Ajusta outros estilos proporcionalmente
-        if (style.padding !== '0px') {
-          const padding = style.padding.split(' ').map(v => parseFloat(v) * 2 + 'px').join(' ');
-          el.style.padding = padding;
-        }
-        if (style.margin !== '0px') {
-          const margin = style.margin.split(' ').map(v => parseFloat(v) * 2 + 'px').join(' ');
-          el.style.margin = margin;
-        }
-        if (style.lineHeight !== 'normal') {
-          const lineHeight = parseFloat(style.lineHeight);
-          el.style.lineHeight = `${lineHeight * 2}px`;
-        }
-      });
-      
-      // Ajusta o container principal
-      const containerStyle = window.getComputedStyle(element);
-      const containerWidth = parseFloat(containerStyle.width);
-      const containerHeight = parseFloat(containerStyle.height);
-      element.style.width = `${containerWidth * 2}px`;
-      element.style.height = `${containerHeight * 2}px`;
+      const element = document.getElementById('zoom-container');
       
       const canvas = await html2canvas(element, {
-        scale: 1, // Mantém a escala 1:1 já que aumentamos manualmente
+        scale: 2,
         backgroundColor: '#e8f7ff',
         logging: false,
         useCORS: true,
-        allowTaint: true
+        allowTaint: true,
+        width: element.offsetWidth * 2,
+        height: element.offsetHeight * 2
       });
-      
-      // Restaura os estilos originais
-      elements.forEach(el => {
-        const original = originalStyles.get(el);
-        if (original) {
-          el.style.fontSize = original.fontSize;
-          el.style.lineHeight = original.lineHeight;
-          el.style.padding = original.padding;
-          el.style.margin = original.margin;
-        }
-      });
-      
-      // Restaura o tamanho do container
-      element.style.width = `${containerWidth}px`;
-      element.style.height = `${containerHeight}px`;
       
       const link = document.createElement('a');
       link.download = `analise-operacao-${formData.proposta || 'sem-proposta'}.png`;
@@ -543,10 +490,16 @@ const SuperBarreiras = () => {
 
       {/* Main Content */}
       <div id="export-container" className="mx-auto p-3" style={{ maxWidth: '1200px', aspectRatio: '3 / 3.5' }}>
-        {/* Título para exportação */}
-        <div className="text-center mb-3 py-2 bg-gradient-to-r from-[#003399] to-[#0055cc] rounded-lg">
-          <h2 className="text-xl font-bold text-white tracking-wide">ANÁLISE DE OPERAÇÕES SUPER BARREIRAS</h2>
-        </div>
+        {/* Container para exportação com zoom */}
+        <div id="zoom-container" style={{ 
+          transform: previewMode ? 'scale(2)' : 'none',
+          transformOrigin: 'top left',
+          transition: 'transform 0.3s ease'
+        }}>
+          {/* Título para exportação */}
+          <div className="text-center mb-3 py-2 bg-gradient-to-r from-[#003399] to-[#0055cc] rounded-lg">
+            <h2 className="text-xl font-bold text-white tracking-wide">ANÁLISE DE OPERAÇÕES SUPER BARREIRAS</h2>
+          </div>
 
         {/* Campos do topo */}
         <div className="rounded-lg shadow-md p-3 mb-3 grid grid-cols-2 gap-3" style={{ backgroundColor: '#D4AF37' }}>
