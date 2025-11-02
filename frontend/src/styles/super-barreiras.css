@@ -1,9 +1,9 @@
 /* Estilos base para o componente SuperBarreiras */
 .super-barreiras {
-    font-size: 130%;
-    line-height: 1.5;
+    font-size: 200%;
+    line-height: 1.8;
     background-color: #e8f7ff;
-    padding: 2rem;
+    padding: 3rem;
 }
 
 .super-barreiras input,
@@ -21,30 +21,31 @@
 
 .money-prefix {
     position: absolute;
-    left: 1rem;
+    left: 2rem;
     top: 50%;
     transform: translateY(-50%);
     font-weight: 600;
     color: #666;
+    font-size: 1.2em;
 }
 
 /* Estilos para campos de texto */
 .field-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
 }
 
 .field-label {
     font-weight: 600;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
     color: #333;
 }
 
 /* Estilos para o modo de preview */
 .preview-mode {
     background-color: #fff;
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 2.5rem;
 }
 
 .preview-mode .field-value {
