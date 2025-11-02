@@ -8,6 +8,7 @@ import { Save, Download, Eye, List, Plus, Trash2, Edit } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { toast } from '../hooks/use-toast';
 import { operacoesService } from '../services/api';
+import '../styles/export.css';
 
 const SuperBarreiras = () => {
   const [previewMode, setPreviewMode] = useState(false);
