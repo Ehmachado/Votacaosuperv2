@@ -8,7 +8,7 @@ import { Save, Download, Eye, List, Plus, Trash2, Edit } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { toast } from '../hooks/use-toast';
 import { operacoesService } from '../services/api';
-import '../styles/export.css';
+import '../styles/super-barreiras.css';
 
 const SuperBarreiras = () => {
   const [previewMode, setPreviewMode] = useState(false);
@@ -249,45 +249,27 @@ const SuperBarreiras = () => {
     setTimeout(async () => {
       const element = document.getElementById('export-container');
       
-      // Salva os estilos originais
-      const originalStyles = new Map();
-      const elements = element.querySelectorAll('*');
-      
-      // Aplica o aumento de fonte em todos os elementos
-      elements.forEach(el => {
-        const computedStyle = window.getComputedStyle(el);
-        originalStyles.set(el, {
-          fontSize: computedStyle.fontSize,
-          lineHeight: computedStyle.lineHeight
-        });
-        
-        const currentSize = parseFloat(computedStyle.fontSize);
-        const newSize = currentSize * 1.3;
-        el.style.fontSize = `${newSize}px`;
-        
-        // Ajusta a altura da linha proporcionalmente
-        const currentLineHeight = parseFloat(computedStyle.lineHeight);
-        if (!isNaN(currentLineHeight)) {
-          el.style.lineHeight = `${currentLineHeight * 1.3}px`;
-        }
-      });
+      // Adiciona classe para exportação
+      element.classList.add('super-barreiras');
       
       const canvas = await html2canvas(element, {
         scale: 2,
         backgroundColor: '#e8f7ff',
         logging: false,
         useCORS: true,
-        allowTaint: true
-      });
-      
-      // Restaura os estilos originais
-      elements.forEach(el => {
-        const original = originalStyles.get(el);
-        if (original) {
-          el.style.fontSize = original.fontSize;
-          el.style.lineHeight = original.lineHeight;
+        allowTaint: true,
+        onclone: (clonedDoc) => {
+          const clonedElement = clonedDoc.getElementById('export-container');
+          if (clonedElement) {
+            // Garante que os estilos sejam aplicados no clone
+            clonedElement.style.width = `${element.offsetWidth}px`;
+            clonedElement.style.height = `${element.offsetHeight}px`;
+          }
         }
       });
+      
+      // Remove classe de exportação
+      element.classList.remove('super-barreiras');
       
       const link = document.createElement('a');
       link.download = `analise-operacao-${formData.proposta || 'sem-proposta'}.png`;
