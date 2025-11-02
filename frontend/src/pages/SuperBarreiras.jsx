@@ -248,16 +248,26 @@ const SuperBarreiras = () => {
     setPreviewMode(true);
     setTimeout(async () => {
       const element = document.getElementById('export-container');
+      // Aplica o zoom antes da exportação
+      element.style.transform = 'scale(1.3)';
+      element.style.transformOrigin = 'top left';
+      
       const canvas = await html2canvas(element, {
         scale: 2,
         backgroundColor: '#e8f7ff',
-        logging: false
+        logging: false,
+        width: element.offsetWidth * 1.3,
+        height: element.offsetHeight * 1.3
       });
       
       const link = document.createElement('a');
       link.download = `analise-operacao-${formData.proposta || 'sem-proposta'}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
+      
+      // Restaura o tamanho original
+      element.style.transform = '';
+      element.style.transformOrigin = '';
       
       setPreviewMode(false);
       toast({
